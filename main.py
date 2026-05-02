@@ -27,36 +27,46 @@ prompt = st.chat_input("Type your message here...")
 
 if prompt:
 
+    # Convert input to lowercase
+    user_input = prompt.lower()
+
     # Save user message
     st.session_state.messages.append({
         "role": "user",
         "content": prompt
     })
 
-    # Display user message
+    # Show user message
     with st.chat_message("user"):
         st.markdown(prompt)
 
-# Convert prompt to lowercase
-user_input = prompt.lower()
+    # Custom responses
+    if "who are you" in user_input:
+        reply = "I am an AI assistant developed and deployed by Chetan Sharma."
 
-# Custom responses
-if "who are you" in user_input:
-    reply = "I am an AI assistant developed and deployed by Chetan Sharma."
+    elif "who made you" in user_input:
+        reply = "I was created by Chetan Sharma."
 
-elif "who made you" in user_input:
-    reply = "I was created by Chetan Sharma."
+    elif "who created you" in user_input:
+        reply = "I was developed by Chetan Sharma."
 
-elif "who created you" in user_input:
-    reply = "I was developed by Chetan Sharma."
+    elif "who developed you" in user_input:
+        reply = "I am an AI chatbot developed and deployed by Chetan Sharma."
 
-elif "who developed you" in user_input:
-    reply = "I am an AI chatbot developed and deployed by Chetan Sharma."
+    else:
+        # AI response
+        response = model.generate_content(prompt)
+        reply = response.text
 
-else:
-    # Gemini AI response
-    response = model.generate_content(prompt)
-    reply = response.text
+    # Display AI response
+    with st.chat_message("assistant"):
+        st.markdown(reply)
+
+    # Save AI response
+    st.session_state.messages.append({
+        "role": "assistant",
+        "content": reply
+    })
 
     # Display AI response
     with st.chat_message("assistant"):
