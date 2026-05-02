@@ -67,13 +67,3 @@ if prompt:
         "role": "assistant",
         "content": reply
     })
-
-    # Display AI response
-    with st.chat_message("assistant"):
-        st.markdown(reply)
-
-    # Save AI response
-    st.session_state.messages.append({
-        "role": "assistant",
-        "content": reply
-    })
