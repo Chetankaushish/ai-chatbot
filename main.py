@@ -1,59 +1,52 @@
-#ai-chatbot-app
-#install generative ai and streamlit
-pip install google-generativeai streamlit python-dotenv
-
-#Gemini_api_key
-
-Gemini_api_key= "AIzaSyAdJ5HCGR81MmvOu9d-WnnnslJPpsIq9og"
-
-#import necessary libraries
-#streamlit for building the web app (UI) frontend
-#google.generativeai for interacting with the Gemini API
-#dotenv for loading environment variables from a .env file
-#os for accessing environment variables
-import streamlit as st 
+import streamlit as st
 import google.generativeai as genai
-from dotenv import load_dotenv
-import os 
 
-#load environment variables from .env file
-load_dotenv()
+# Configure Gemini API
+genai.configure(
+    api_key="YOUR_GEMINI_API_KEY"
+)
 
-#configure the gemini api key 
-genai.configure(api_key=os.getenv("Gemini_api_key"))
+# Load Gemini model
+model = genai.GenerativeModel("gemini-1.5-flash")
 
+# Page title
+st.title("🤖 Free AI Chatbot")
 
-#load the Gemini model
-model = genai.GenerativeModel("gemini-1.5-pro")
+# Create chat history
+if "messages" not in st.session_state:
+    st.session_state.messages = []
 
-#page title 
-st.title("Free AI Chatbot")
+# Display old chat messages
+for msg in st.session_state.messages:
+    with st.chat_message(msg["role"]):
+        st.markdown(msg["content"])
 
-#chat history to store the conversation between the user and the chatbot
-if "chat_history" not in st.session_state:
-    st.session_state.chat_history = []
-
-    #display the chat history
-    for msg in st.session_state.messages:
-        with st.chat_message(msg["role"]):
-            st.markdown(msg["content"])
-
-#input box for user to type their message
-if prompt := st.chat_input("Type your message here..."):
-
-#add the user's message to the chat history
-    st.session_state.chat_history.append({"role": "user", "content": prompt})
-
-#user input is sent to the Gemini model and get the response
+# User input
 prompt = st.chat_input("Type your message here...")
-if prompt:
-    #save the massage to the chat history 
-    st.session_state.chat_history.append({"role": "user", "content": prompt})
 
-#SHOW user massage 
+if prompt:
+
+    # Save user message
+    st.session_state.messages.append({
+        "role": "user",
+        "content": prompt
+    })
+
+    # Display user message
     with st.chat_message("user"):
         st.markdown(prompt)
 
-#save ai response to the chat history
+    # Generate AI response
     response = model.generate_content(prompt)
-    st.session_state.chat_history.append({"role": "assistant", "content": response.text})
+
+    reply = response.text
+
+    # Display AI response
+    with st.chat_message("assistant"):
+        st.markdown(reply)
+
+    # Save AI response
+    st.session_state.messages.append({
+        "role": "assistant",
+        "content": reply
+    })
