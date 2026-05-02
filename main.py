@@ -7,10 +7,11 @@ genai.configure(
 )
 
 # Load Gemini model
-model = genai.GenerativeModel("gemini-1.5-flash")
+model = genai.GenerativeModel("gemini-pro")
 
 # Page title
 st.title("🤖 Free AI Chatbot")
+st.subtitle("Chetan Sharma")
 
 # Create chat history
 if "messages" not in st.session_state:
