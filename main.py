@@ -7,7 +7,7 @@ genai.configure(
 )
 
 # Load Gemini model
-model = genai.GenerativeModel("gemini-pro")
+model = genai.GenerativeModel("models/gemini-2.5-flash")
 
 # Page title
 st.title("🤖 Free AI Chatbot","Chetan Sharma")
