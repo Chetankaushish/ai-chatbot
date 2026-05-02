@@ -37,9 +37,25 @@ if prompt:
     with st.chat_message("user"):
         st.markdown(prompt)
 
-    # Generate AI response
-    response = model.generate_content(prompt)
+  # Convert prompt to lowercase
+user_input = prompt.lower()
 
+# Custom responses
+if "who are you" in user_input:
+    reply = "I am an AI assistant developed and deployed by Chetan Sharma."
+
+elif "who made you" in user_input:
+    reply = "I was created by Chetan Sharma."
+
+elif "who created you" in user_input:
+    reply = "I was developed by Chetan Sharma."
+
+elif "who developed you" in user_input:
+    reply = "I am an AI chatbot developed and deployed by Chetan Sharma."
+
+else:
+    # Gemini AI response
+    response = model.generate_content(prompt)
     reply = response.text
 
     # Display AI response
