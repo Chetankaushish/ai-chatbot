@@ -37,7 +37,7 @@ if prompt:
     with st.chat_message("user"):
         st.markdown(prompt)
 
-  # Convert prompt to lowercase
+# Convert prompt to lowercase
 user_input = prompt.lower()
 
 # Custom responses
