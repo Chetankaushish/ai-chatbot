@@ -3,7 +3,7 @@ import google.generativeai as genai
 
 # Configure Gemini API
 genai.configure(
-    api_key="YOUR_GEMINI_API_KEY"
+    api_key=st.secrets["GEMINI_API_KEY"]
 )
 
 # Load Gemini model
